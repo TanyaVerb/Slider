@@ -29,6 +29,7 @@ function setWidthLine() {
 window.addEventListener("resize", setWidthLine);
 setWidthLine();
 
+dotActive();
 //___
 function dotActive() {
   dots[orderImg].classList.add("active");
