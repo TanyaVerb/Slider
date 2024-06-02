@@ -11,8 +11,6 @@ let orderImg = 0;
 let width;
 console.log(width);
 
-// dots[orderImg].classList.add("active");
-
 function setWidthLine() {
   width = sliderWrapper.offsetWidth;
   sliderLine.style.width = width * images.length + "px";
@@ -29,6 +27,7 @@ function setWidthLine() {
 window.addEventListener("resize", setWidthLine);
 setWidthLine();
 
+//подсвечиваем выбранную по дефолту картинку
 dotActive();
 //___
 function dotActive() {
@@ -39,11 +38,17 @@ function removeActiveClass() {
   dots[orderImg].classList.remove("active");
 }
 
+function scrollSlider() {
+  const value = orderImg * width;
+  sliderLine.style.transform = `translate(-${value}px)`;
+}
 //__
 dots.forEach((dot, index) => {
   dot.addEventListener("click", () => {
-    const value = index * width;
-    sliderLine.style.transform = `translate(-${value}px)`;
+    removeActiveClass();
+    orderImg = index;
+    dotActive();
+    scrollSlider();
   });
 });
 
@@ -56,7 +61,6 @@ nextBtn.addEventListener("click", function () {
     orderImg = 0;
   }
   dotActive();
-
   scrollSlider();
 });
 
@@ -67,11 +71,5 @@ prevBtn.addEventListener("click", function () {
     orderImg = images.length - 1;
   }
   dotActive();
-
   scrollSlider();
 });
-
-function scrollSlider() {
-  const value = orderImg * width;
-  sliderLine.style.transform = `translate(-${value}px)`;
-}
