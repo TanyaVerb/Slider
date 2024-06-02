@@ -7,12 +7,13 @@ const nextBtn = document.querySelector(".slider__next-btn");
 const prevBtn = document.querySelector(".slider__prev-btn");
 
 // transform: translate(-400px)
-let orderImg = 0;
-let width;
+let orderImg = 0; // индекс текущего изображения
+let width; //ширина одного изображения
 console.log(width);
 
+//устанавливает ширину элемента sliderLine= сумме ширин всех изображений. Исп-ся для инициализации размеров слайдера при загрузке и при изменении размера окна.
 function setWidthLine() {
-  width = sliderWrapper.offsetWidth;
+  width = sliderWrapper.offsetWidth; //ширина из-я = ширине контейнера
   sliderLine.style.width = width * images.length + "px";
   images.forEach((item) => {
     item.style.width = width + "px";
@@ -23,13 +24,14 @@ function setWidthLine() {
   console.log("widthLine", sliderLine.style.width);
 }
 
-//срабатывает при изменении размера представления документа (окна)
+//срабатывает при изменении размера представления документа (окна) и вызывает функцию setWidthLine для установки начальных размеров
 window.addEventListener("resize", setWidthLine);
 setWidthLine();
 
-//подсвечиваем выбранную по дефолту картинку
+//подсвечиваем выбранную по дефолту картинку (точку)
 dotActive();
 //___
+//добавляет класс "active" к текущей точке
 function dotActive() {
   dots[orderImg].classList.add("active");
 }
@@ -37,7 +39,7 @@ function dotActive() {
 function removeActiveClass() {
   dots[orderImg].classList.remove("active");
 }
-
+//вычисляет значение смещения value для sliderLine в зав-ти от orderImg и width
 function scrollSlider() {
   const value = orderImg * width;
   sliderLine.style.transform = `translate(-${value}px)`;
@@ -46,9 +48,9 @@ function scrollSlider() {
 dots.forEach((dot, index) => {
   dot.addEventListener("click", () => {
     removeActiveClass();
-    orderImg = index;
+    orderImg = index; //устанавливается в индекс кликнутой точки
     dotActive();
-    scrollSlider();
+    scrollSlider(); //перемещаем слайдер к соотв.изоб-нию
   });
 });
 
@@ -68,7 +70,7 @@ prevBtn.addEventListener("click", function () {
   removeActiveClass();
   orderImg--;
   if (orderImg < 0) {
-    orderImg = images.length - 1;
+    orderImg = images.length - 1; //переход к последнему из-ю
   }
   dotActive();
   scrollSlider();
